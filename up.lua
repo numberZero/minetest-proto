@@ -68,11 +68,11 @@ add_message{ id = 0x37, name = "PlayerItem", description = "Sent to change selec
 add_message{ id = 0x38, name = "Respawn" }
 
 local action = enum{ name = "Action", type = u8, labels = {
-	[0] = { name = "Start", description = "start digging (from undersurface) or use" }
-	[1] = { name = "Stop", description = "stop digging (all parameters ignored)" }
-	[2] = { name = "Completed", description = "digging completed" }
-	[3] = { name = "Place", description = "place block or item (to abovesurface)" }
-	[4] = { name = "Use", description = "use item" }
+	[0] = { name = "Start", description = "start digging (from undersurface) or use" },
+	[1] = { name = "Stop", description = "stop digging (all parameters ignored)" },
+	[2] = { name = "Completed", description = "digging completed" },
+	[3] = { name = "Place", description = "place block or item (to abovesurface)" },
+	[4] = { name = "Use", description = "use item" },
 }}
 
 local pointedthing = record{ name = "PointedThing", content = {
@@ -92,7 +92,7 @@ local pointedthing = record{ name = "PointedThing", content = {
 add_message{ id = 0x39, name = "Interact", content = {
 	{ name = "action", type = action },
 	{ name = "item", type = u16 },
-	{ name = "pointed", type = blob, description = "Serialized PointedThing" }
+	{ name = "pointed", type = blob, description = "Serialized PointedThing" },
 	{ name = "pos", type = player_pos },
 }}
 

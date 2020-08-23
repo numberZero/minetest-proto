@@ -46,7 +46,7 @@ add_message{ id = 0x21, name = "RemoveNode", content = {
 
 add_message{ id = 0x27, name = "Inventory", content = {
 	{ name = "data", type = raw } -- до конца пакета
-}
+}}
 
 add_message{ id = 0x29, name = "TimeOfDay", content = {
 	{ name = "time", type = u16 },
@@ -316,7 +316,7 @@ add_message{ id = 0x4b, name = "HudChange", content = {
 		{ name = "size", content = v2s32 },
 		{ name = "z_index", content = u32 },
 		{ name = "text2", content = utf8string },
-	}
+	}}
 }}
 
 add_message{ id = 0x4c, name = "HudSetFlags", content = {
@@ -333,21 +333,21 @@ add_message{ id = 0x4e, name = "Breath", content = {
 	{ name = "breath", type = u16 },
 }}
 
-add_message{ id = 0x4f, name = "HudSetSky", version = 38, content = {
+add_message{ id = 0x4f, name = "SetSky", version = "<39", content = {
 	{ name = "base_color", type = color },
 	{ name = "type", type = rawstring },
 	{ name = "textures", type = array{ size = u16, entry = utf8string } },
 	{ name = "clouds", type = b8, default = true },
 }}
 
-add_message{ id = 0x4f, name = "SetSky", version = 39, content = {
+add_message{ id = 0x4f, name = "SetSky", version = "39", content = {
 	{ name = "bgcolor", type = color },
 	{ name = "type", type = utf8string },
 	{ name = "clouds", type = b8 },
 	{ name = "fog_sun_tint", type = color },
 	{ name = "fog_moon_tint", type = color },
 	{ name = "fog_tint_type", type = utf8string },
-	switch{
+	variant{
 		selector = "type",
 		unknown = "ignore",
 		options = {
@@ -419,14 +419,14 @@ add_message{ id = 0x57, name = "ModChannelMsg", content = {
 	{ name = "message", type = utf8string },
 }}
 
-local mod_channel_state = enum{ name = "ModeChannelState", labels = { [0] =
+local mod_channel_state = enum{ name = "ModeChannelState", type = u8, labels = { [0] =
 	"init",
 	"read_write",
 	"read_only",
 }}
 
 add_message{ id = 0x58, name = "ModChannelSignal", content = {
-	{ name = "signal", type = enum{ labels = { [0] =
+	{ name = "signal", type = enum{ type = u8, labels = { [0] =
 		"join_ok",
 		"join_failure",
 		"leave_ok",
