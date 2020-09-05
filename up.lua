@@ -80,11 +80,11 @@ local pointedthing = record{ name = "PointedThing", content = {
 	variant{ selector = u8, options = {
 		[0] = { name = "nothing" },
 		[1] = { name = "node", content = {
-			{ name = "under", type = "v3s16" },
-			{ name = "above", type = "v3s16" },
+			{ name = "under", type = v3s16 },
+			{ name = "above", type = v3s16 },
 		}},
 		[2] = { name = "object", content = {
-			{ name = "object_id", type = "s16" },
+			{ name = "object_id", type = s16 },
 		}},
 	}}
 }}

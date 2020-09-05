@@ -158,10 +158,10 @@ add_message{ id = 0x3f, name = "PlaySound", content = {
 	{ name = "sound_id", type = s32 },
 	{ name = "sound_name", type = rawstring },
 	{ name = "gain", type = f32 },
-	{ name = "type", type = enum{ name = "SoundType", type = "u8", labels = {
+	{ name = "type", type = enum{ name = "SoundType", type = u8, labels = {
 		[0] = "local",
 		[1] = "positional",
-		[2] = "local",
+		[2] = "object",
 	}}},
 	{ name = "position", type = v3f },
 	{ name = "object_id", type = u16 },
@@ -273,7 +273,7 @@ add_message{ id = 0x47, name = "AddParticleSpawner", content = {
 	{ name = "attached_id", type = u16 },
 	{ name = "animation", type = tile_animation },
 	{ name = "glow", type = u8 },
-	{ name = "object_collision", type = u8 },
+	{ name = "object_collision", type = b8 },
 	{ name = "node", type = particle_node, required = false },
 }}
 
@@ -302,7 +302,7 @@ add_message{ id = 0x4a, name = "HudRemove", content = {
 
 add_message{ id = 0x4b, name = "HudChange", content = {
 	{ name = "id", type = u32 },
-	variant{ selector = u8, options = { [0] = 
+	variant{ selector = u8, options = { [0] =
 		{ name = "pos", content = v2f },
 		{ name = "name", content = utf8string },
 		{ name = "scale", content = v2f },
@@ -419,7 +419,7 @@ add_message{ id = 0x57, name = "ModChannelMsg", content = {
 	{ name = "message", type = utf8string },
 }}
 
-local mod_channel_state = enum{ name = "ModeChannelState", type = u8, labels = { [0] =
+local mod_channel_state = enum{ name = "ModChannelState", type = u8, labels = { [0] =
 	"init",
 	"read_write",
 	"read_only",
@@ -435,11 +435,15 @@ add_message{ id = 0x58, name = "ModChannelSignal", content = {
 		"set_state",
 	}}},
 	{ name = "channel_name", type = utf8string },
-	variant{ selector = "signal", unknown = ignore, options = {
-		set_state = {
-			{ name = "state", type = mod_channel_state },
+	variant{
+		selector = "signal",
+		unknown = "ignore",
+		options = {
+			set_state = {
+				{ name = "state", type = mod_channel_state },
+			},
 		},
-	}},
+	},
 }}
 
 add_message{ id = 0x59, name = "NodeMetaChanged", content = {
@@ -463,7 +467,7 @@ add_message{ id = 0x5b, name = "SetMoon", content = {
 }}
 
 add_message{ id = 0x5c, name = "SetStars", content = {
-	{ name = "visible", type = bool },
+	{ name = "visible", type = b8 },
 	{ name = "count", type = u32 },
 	{ name = "color", type = color },
 	{ name = "scale", type = f32 },
