@@ -1,9 +1,3 @@
--- utf8string: u16, затем цепочка c8 (UTF-8) ↔ string
--- utf16string: u16, затем цепочка c16 (UTF-16BE) ↔ string
--- rawstring: u16, затем цепочка u8 (без кодировки) ↔ bytearray
--- blob: u32, затем цепочка u8 (без кодировки) ↔ bytearray
--- raw: цепочка u8 (без префикса, без кодировки) ↔ bytearray; допустим только в особых случаях
-
 add_message{ id = 0x02, name = "Init", description = "Sent first after connected.", content = {
 	{ name = "max_serialization_version", type = u8, description = "Serialisation version (serialisation format version highest read)" },
 	{ name = "compression_support", type = u16, value = 0, description = "Supported network compression modes" },
@@ -34,7 +28,7 @@ local player_pos = record{ name = "PlayerPos", content = {
 	{ name = "speed", type = scaled{ type = v3s32, scale = 100 } },
 	{ name = "pitch", type = scaled{ type = s32, scale = 100 } },
 	{ name = "yaw", type = scaled{ type = s32, scale = 100 } },
-	{ name = "keypressed", type = u32 },
+	{ name = "keypressed", type = u32 }, -- битовое поле
 	{ name = "fov", type = scaled{ type = u8, scale = 80 } },
 	{ name = "wanted_range", type = u8, description = "Wanted range (in map blocks)" },
 }}
@@ -58,7 +52,7 @@ add_message{ id = 0x32, name = "ChatMessage", content = {
 }}
 
 add_message{ id = 0x35, name = "Damage", content = {
-	{ name = "amount", type = u16 },
+	{ name = "amount", type = u16 }, -- u8 до 2019-02-10 (ffb17f1)
 }}
 
 add_message{ id = 0x37, name = "PlayerItem", description = "Sent to change selected item.", content = {

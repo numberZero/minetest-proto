@@ -1,3 +1,6 @@
+min_version = 37
+max_version = 39
+
 add_message{ id = 0x02, name = "Hello", description = "Sent as response to Init", content = {
 	{ name = "serialization_version", type = u8, description = "Deployed serialisation version" },
 	{ name = "compression", type = u16, value = 0, description = "Deployed network compression mode" },
@@ -37,7 +40,7 @@ local map_node = record{ name = "MapNode", description = "MapNode serialization 
 add_message{ id = 0x21, name = "AddNode", content = {
 	{ name = "position", type = v3s16 },
 	{ name = "mapnode", type = map_node },
-	{ name = "keep_metadata", type = b8 }, -- Added in protocol version 22
+	{ name = "keep_metadata", type = b8 },
 }}
 
 add_message{ id = 0x21, name = "RemoveNode", content = {
@@ -50,7 +53,7 @@ add_message{ id = 0x27, name = "Inventory", content = {
 
 add_message{ id = 0x29, name = "TimeOfDay", content = {
 	{ name = "time", type = u16 },
-	{ name = "time_speed", type = f32 }, -- добавлен позже
+	{ name = "time_speed", type = f32 },
 }}
 
 add_message{ id = 0x2A, name = "CsmRestrictionFlags", content = {
@@ -58,11 +61,11 @@ add_message{ id = 0x2A, name = "CsmRestrictionFlags", content = {
 	{ name = "range", type = u32 },
 }}
 
-add_message{ id = 0x2B, name = "PlayerSpeed", content = {
+add_message{ id = 0x2B, name = "PlayerSpeed", content = { -- добавлен 2019-08-10 в cf64054
 	{ name = "added_vel", type = v3f },
 }}
 
-add_message{ id = 0x2C, name = "MediaPush", content = {
+add_message{ id = 0x2C, name = "MediaPush", content = { -- добавлено 2020-06-13 в 2424dfe
 	{ name = "raw_hash", type = rawstring },
 	{ name = "filename", type = utf8string },
 	{ name = "cache", type = b8 },
@@ -112,10 +115,10 @@ add_message{ id = 0x35, name = "AccessDeniedLegacy", content = {
 	{ name = "reason", type = utf16string },
 }}
 
-add_message{ id = 0x36, name = "Fov", description = "Sends an FOV override/multiplier to client.", content = {
+add_message{ id = 0x36, name = "Fov", description = "Sends an FOV override/multiplier to client.", content = { -- добавлено 2019-09-19 в 47da640
 	{ name = "fov", type = f32 },
 	{ name = "is_multiplier", type = b8 },
-	{ name = "transition_time", type = f32 },
+	{ name = "transition_time", type = f32, default = 0.0 }, -- добавлено 2020-05-02 в e0ea87f
 }}
 
 add_message{ id = 0x37, name = "DeathScreen", content = {
@@ -168,7 +171,7 @@ add_message{ id = 0x3f, name = "PlaySound", content = {
 	{ name = "loop", type = b8 },
 	{ name = "fade", type = f32, default = 0.0 },
 	{ name = "pitch", type = f32, default = 1.0 },
-	{ name = "ephemeral", type = b8, default = false },
+	{ name = "ephemeral", type = b8, default = false }, -- добавлено 2020-02-01 в ace3c76
 }}
 
 add_message{ id = 0x40, name = "StopSound", content = {
@@ -188,7 +191,7 @@ add_message{ id = 0x43, name = "DetachedInventory", content = {
 	variant{ selector = u8, options = {
 		[0] = { name = "remove" },
 		[1] = { name = "update", content = {
-			{ type = u16 },
+			{ type = u16 }, -- длина строки до 2019-03-07 (ac86d04)
 			{ name = "data", type = raw, description = "Uncompressed serialized inventory" },
 		}},
 	}},
@@ -281,7 +284,7 @@ add_message{ id = 0x49, name = "HudAdd", content = {
 	{ name = "id", type = u32 },
 	{ name = "type", type = u8 },
 	{ name = "pos", type = v2f },
-	{ name = "name", type = rawstring },
+	{ name = "name", type = utf8string },
 	{ name = "scale", type = v2f },
 	{ name = "text", type = utf8string },
 	{ name = "number", type = u32 },
@@ -289,11 +292,10 @@ add_message{ id = 0x49, name = "HudAdd", content = {
 	{ name = "dir", type = u32 },
 	{ name = "align", type = v2f },
 	{ name = "offset", type = v2f },
-
 	{ name = "world_pos", type = v3f },
 	{ name = "size", type = v2s32 },
-	{ name = "z_index", type = s16 },
-	{ name = "text2", type = utf8string },
+	{ name = "z_index", type = s16, default = 0 }, -- добавлено 2019-12-06 в cf7fda0
+	{ name = "text2", type = utf8string, default = "" }, -- добавлено 2020-05-11 в 6e1372b
 }}
 
 add_message{ id = 0x4a, name = "HudRemove", content = {
@@ -333,14 +335,14 @@ add_message{ id = 0x4e, name = "Breath", content = {
 	{ name = "breath", type = u16 },
 }}
 
-add_message{ id = 0x4f, name = "SetSky", version = "<39", content = {
+add_message{ id = 0x4f, name = "SetSky", min_version = 37, content = { -- заменено 2020-03-05 в 946c03c (протокол 39)
 	{ name = "base_color", type = color },
 	{ name = "type", type = rawstring },
 	{ name = "textures", type = array{ size = u16, entry = utf8string } },
-	{ name = "clouds", type = b8, default = true },
+	{ name = "clouds", type = b8 },
 }}
 
-add_message{ id = 0x4f, name = "SetSky", version = "39", content = {
+add_message{ id = 0x4f, name = "SetSky", min_version = 39, content = { -- версия от 2020-03-05 (946c03c, протокол 39)
 	{ name = "bgcolor", type = color },
 	{ name = "type", type = utf8string },
 	{ name = "clouds", type = b8 },
@@ -446,11 +448,11 @@ add_message{ id = 0x58, name = "ModChannelSignal", content = {
 	},
 }}
 
-add_message{ id = 0x59, name = "NodeMetaChanged", content = {
+add_message{ id = 0x59, name = "NodeMetaChanged", content = { -- добавлено 2018-12-04 в 3d66622
 	{ name = "changes", type = blob, description = "ZLib-compressed change list" },
 }}
 
-add_message{ id = 0x5a, name = "SetSun", content = {
+add_message{ id = 0x5a, name = "SetSun", content = { -- добавлено 2020-03-05 в 946c03c (протокол 39)
 	{ name = "visible", type = b8 },
 	{ name = "texture", type = utf8string },
 	{ name = "tonemap", type = utf8string },
@@ -459,14 +461,14 @@ add_message{ id = 0x5a, name = "SetSun", content = {
 	{ name = "scale", type = f32 },
 }}
 
-add_message{ id = 0x5b, name = "SetMoon", content = {
+add_message{ id = 0x5b, name = "SetMoon", content = { -- добавлено 2020-03-05 в 946c03c (протокол 39)
 	{ name = "visible", type = b8 },
 	{ name = "texture", type = utf8string },
 	{ name = "tonemap", type = utf8string },
 	{ name = "scale", type = f32 },
 }}
 
-add_message{ id = 0x5c, name = "SetStars", content = {
+add_message{ id = 0x5c, name = "SetStars", content = { -- добавлено 2020-03-05 в 946c03c (протокол 39)
 	{ name = "visible", type = b8 },
 	{ name = "count", type = u32 },
 	{ name = "color", type = color },
@@ -479,5 +481,5 @@ add_message{ id = 0x60, name = "SrpBytesSB", description = "Belonging to AuthMec
 }}
 
 add_message{ id = 0x61, name = "FormspecPrepend", content = {
-	{ name = "formspec", type = rawstring },
+	{ name = "formspec", type = utf8string },
 }}
