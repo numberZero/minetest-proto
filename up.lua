@@ -1,3 +1,6 @@
+min_version = 37
+max_version = 39
+
 add_message{ id = 0x02, name = "Init", description = "Sent first after connected.", content = {
 	{ name = "max_serialization_version", type = u8, description = "Serialisation version (serialisation format version highest read)" },
 	{ name = "compression_support", type = u16, value = 0, description = "Supported network compression modes" },

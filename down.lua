@@ -191,7 +191,7 @@ add_message{ id = 0x43, name = "DetachedInventory", content = {
 	variant{ selector = u8, options = {
 		[0] = { name = "remove" },
 		[1] = { name = "update", content = {
-			{ type = u16 }, -- длина строки до 2019-03-07 (ac86d04)
+			{ name = "length", type = u16 }, -- длина строки до 2019-03-07 (ac86d04)
 			{ name = "data", type = raw, description = "Uncompressed serialized inventory" },
 		}},
 	}},
@@ -471,7 +471,7 @@ add_message{ id = 0x5b, name = "SetMoon", content = { -- добавлено 2020
 add_message{ id = 0x5c, name = "SetStars", content = { -- добавлено 2020-03-05 в 946c03c (протокол 39)
 	{ name = "visible", type = b8 },
 	{ name = "count", type = u32 },
-	{ name = "color", type = color },
+	{ name = "star_color", type = color },
 	{ name = "scale", type = f32 },
 }}
 
