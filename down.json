@@ -1,0 +1,1496 @@
+{
+	"min_version": 37,
+	"max_version": 39,
+	"messages": [
+		{
+			"id": 2,
+			"name": "Hello",
+			"description": "Sent as response to Init",
+			"content": [
+				{
+					"name": "serialization_version",
+					"type": "u8",
+					"description": "Deployed serialisation version"
+				},
+				{
+					"name": "compression",
+					"type": "u16",
+					"value": 0,
+					"description": "Deployed network compression mode"
+				},
+				{
+					"name": "protocol_version",
+					"type": "u16",
+					"description": "Deployed protocol version"
+				},
+				{
+					"name": "auth_methods",
+					"type": "u32",
+					"description": "Supported auth methods"
+				},
+				{
+					"name": "username",
+					"type": "rawstring",
+					"description": "Username that should be used for legacy hash (for proper casing)"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"name": "AuthAccept",
+			"description": "Message from server to accept auth.",
+			"content": [
+				{
+					"name": "player_position",
+					"type": "v3f",
+					"description": "Player's position + v3f(0, BS/2, 0) floatToInt\u2019d"
+				},
+				{
+					"name": "map_seed",
+					"type": "u64"
+				},
+				{
+					"name": "send_interval",
+					"type": "f32",
+					"description": "Recommended send interval"
+				},
+				{
+					"name": "sudo_auth_methods",
+					"type": "u32",
+					"description": "Supported auth methods for sudo mode (where the user can change their password)"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"name": "AcceptSudoMode",
+			"description": "Sent to client to show it is in sudo mode now."
+		},
+		{
+			"id": 5,
+			"name": "DenySudoMode",
+			"description": "Signals client that sudo mode auth failed."
+		},
+		{
+			"id": 10,
+			"name": "AccessDenied",
+			"content": [
+				{
+					"name": "reason",
+					"type": "u8"
+				},
+				{
+					"name": "custom_reason",
+					"type": "utf8string",
+					"default": ""
+				},
+				{
+					"name": "reconnect",
+					"type": "b8",
+					"default": "false"
+				}
+			]
+		},
+		{
+			"id": 32,
+			"name": "BlockData",
+			"content": [
+				{
+					"name": "position",
+					"type": "v3s16"
+				},
+				{
+					"name": "data",
+					"type": "raw"
+				}
+			]
+		},
+		{
+			"id": 33,
+			"name": "AddNode",
+			"content": [
+				{
+					"name": "position",
+					"type": "v3s16"
+				},
+				{
+					"name": "mapnode",
+					"type": "MapNode"
+				},
+				{
+					"name": "keep_metadata",
+					"type": "b8"
+				}
+			]
+		},
+		{
+			"id": 33,
+			"name": "RemoveNode",
+			"content": [
+				{
+					"name": "position",
+					"type": "v3s16"
+				}
+			]
+		},
+		{
+			"id": 39,
+			"name": "Inventory",
+			"content": [
+				{
+					"name": "data",
+					"type": "raw"
+				}
+			]
+		},
+		{
+			"id": 41,
+			"name": "TimeOfDay",
+			"content": [
+				{
+					"name": "time",
+					"type": "u16"
+				},
+				{
+					"name": "time_speed",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 42,
+			"name": "CsmRestrictionFlags",
+			"content": [
+				{
+					"name": "flags",
+					"type": "u64"
+				},
+				{
+					"name": "range",
+					"type": "u32"
+				}
+			]
+		},
+		{
+			"id": 43,
+			"name": "PlayerSpeed",
+			"content": [
+				{
+					"name": "added_vel",
+					"type": "v3f"
+				}
+			]
+		},
+		{
+			"id": 44,
+			"name": "MediaPush",
+			"content": [
+				{
+					"name": "raw_hash",
+					"type": "rawstring"
+				},
+				{
+					"name": "filename",
+					"type": "utf8string"
+				},
+				{
+					"name": "cache",
+					"type": "b8"
+				},
+				{
+					"name": "filedata",
+					"type": "blob"
+				}
+			]
+		},
+		{
+			"id": 47,
+			"name": "ChatMessage",
+			"content": [
+				{
+					"name": "version",
+					"type": "u8"
+				},
+				{
+					"name": "type",
+					"type": "u8"
+				},
+				{
+					"name": "sender",
+					"type": "utf16string"
+				},
+				{
+					"name": "message",
+					"type": "utf16string"
+				},
+				{
+					"name": "time",
+					"type": "u64"
+				}
+			]
+		},
+		{
+			"id": 49,
+			"name": "ActiveObjectRemoveAdd",
+			"content": [
+				{
+					"name": "removed_objects",
+					"type": {
+						"class": "array",
+						"size": "u16",
+						"entry": "u16"
+					}
+				},
+				{
+					"name": "added_objects",
+					"type": {
+						"class": "array",
+						"size": "u16",
+						"entry": {
+							"class": "record",
+							"content": [
+								{
+									"name": "id",
+									"type": "u16"
+								},
+								{
+									"name": "type",
+									"type": "u8"
+								},
+								{
+									"name": "initialization_data",
+									"type": "blob"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 50,
+			"name": "ActiveObjectMessages",
+			"content": [
+				{
+					"name": "messages",
+					"type": {
+						"class": "array",
+						"entry": {
+							"class": "record",
+							"content": [
+								{
+									"name": "id",
+									"type": "u16"
+								},
+								{
+									"name": "message",
+									"type": "rawstring"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 51,
+			"name": "Hp",
+			"content": [
+				{
+					"name": "hp",
+					"type": "u16"
+				}
+			]
+		},
+		{
+			"id": 52,
+			"name": "MovePlayer",
+			"content": [
+				{
+					"name": "position",
+					"type": "v3f"
+				},
+				{
+					"name": "pitch",
+					"type": "f32"
+				},
+				{
+					"name": "yaw",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 53,
+			"name": "AccessDeniedLegacy",
+			"content": [
+				{
+					"name": "reason",
+					"type": "utf16string"
+				}
+			]
+		},
+		{
+			"id": 54,
+			"name": "Fov",
+			"description": "Sends an FOV override/multiplier to client.",
+			"content": [
+				{
+					"name": "fov",
+					"type": "f32"
+				},
+				{
+					"name": "is_multiplier",
+					"type": "b8"
+				},
+				{
+					"name": "transition_time",
+					"type": "f32",
+					"default": 0.0
+				}
+			]
+		},
+		{
+			"id": 55,
+			"name": "DeathScreen",
+			"content": [
+				{
+					"name": "set_camera_target",
+					"type": "b8"
+				},
+				{
+					"name": "camera_target",
+					"type": "v3f",
+					"description": "Camera point target (to point the death cause or whatever)"
+				}
+			]
+		},
+		{
+			"id": 56,
+			"name": "Media",
+			"content": [
+				{
+					"name": "bunch_count",
+					"type": "u16",
+					"description": "total number of texture bunches"
+				},
+				{
+					"name": "bunch_id",
+					"type": "u16",
+					"description": "index of this bunch"
+				},
+				{
+					"name": "files",
+					"type": {
+						"class": "array",
+						"size": "u32",
+						"entry": {
+							"class": "record",
+							"content": [
+								{
+									"name": "name",
+									"type": "utf8string"
+								},
+								{
+									"name": "data",
+									"type": "blob"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 58,
+			"name": "NodeDef",
+			"content": [
+				{
+					"name": "data",
+					"type": "blob",
+					"description": "ZLib-compressed serialized data"
+				}
+			]
+		},
+		{
+			"id": 60,
+			"name": "AnnounceMedia",
+			"content": [
+				{
+					"name": "files",
+					"type": {
+						"class": "array",
+						"size": "u16",
+						"entry": {
+							"class": "record",
+							"content": [
+								{
+									"name": "name",
+									"type": "utf8string"
+								},
+								{
+									"name": "digest",
+									"type": "utf8string",
+									"description": "Base64-encoded SHA-1 digest"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "content_servers",
+					"type": "utf8string",
+					"default": ""
+				}
+			]
+		},
+		{
+			"id": 61,
+			"name": "ItemDef",
+			"content": [
+				{
+					"name": "data",
+					"type": "blob",
+					"description": "ZLib-compressed serialized data"
+				}
+			]
+		},
+		{
+			"id": 63,
+			"name": "PlaySound",
+			"content": [
+				{
+					"name": "sound_id",
+					"type": "s32"
+				},
+				{
+					"name": "sound_name",
+					"type": "rawstring"
+				},
+				{
+					"name": "gain",
+					"type": "f32"
+				},
+				{
+					"name": "type",
+					"type": {
+						"class": "enum",
+						"name": "SoundType",
+						"type": "u8",
+						"labels": [
+							"local",
+							"positional",
+							"object"
+						]
+					}
+				},
+				{
+					"name": "position",
+					"type": "v3f"
+				},
+				{
+					"name": "object_id",
+					"type": "u16"
+				},
+				{
+					"name": "loop",
+					"type": "b8"
+				},
+				{
+					"name": "fade",
+					"type": "f32",
+					"default": 0.0
+				},
+				{
+					"name": "pitch",
+					"type": "f32",
+					"default": 1.0
+				},
+				{
+					"name": "ephemeral",
+					"type": "b8",
+					"default": "false"
+				}
+			]
+		},
+		{
+			"id": 64,
+			"name": "StopSound",
+			"content": [
+				{
+					"name": "sound_id",
+					"type": "s32"
+				}
+			]
+		},
+		{
+			"id": 65,
+			"name": "Privileges",
+			"content": [
+				{
+					"name": "privileges",
+					"type": {
+						"class": "array",
+						"size": "u16",
+						"entry": "rawstring"
+					}
+				}
+			]
+		},
+		{
+			"id": 66,
+			"name": "InventoryFormspec",
+			"content": [
+				{
+					"name": "formspec",
+					"type": "blob",
+					"description": "Raw uncompressed formspec"
+				}
+			]
+		},
+		{
+			"id": 67,
+			"name": "DetachedInventory",
+			"content": [
+				{
+					"name": "name",
+					"type": "utf8string"
+				},
+				{
+					"class": "variant",
+					"selector": "u8",
+					"options": [
+						{
+							"name": "remove"
+						},
+						{
+							"name": "update",
+							"content": [
+								{
+									"name": "length",
+									"type": "u16"
+								},
+								{
+									"name": "data",
+									"type": "raw",
+									"description": "Uncompressed serialized inventory"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": 68,
+			"name": "ShowFormspec",
+			"content": [
+				{
+					"name": "formspec",
+					"type": "blob"
+				},
+				{
+					"name": "formname",
+					"type": "rawstring"
+				}
+			]
+		},
+		{
+			"id": 69,
+			"name": "Movement",
+			"content": [
+				{
+					"name": "acceleration_default",
+					"type": "f32"
+				},
+				{
+					"name": "acceleration_air",
+					"type": "f32"
+				},
+				{
+					"name": "acceleration_fast",
+					"type": "f32"
+				},
+				{
+					"name": "speed_walk",
+					"type": "f32"
+				},
+				{
+					"name": "speed_crouch",
+					"type": "f32"
+				},
+				{
+					"name": "speed_fast",
+					"type": "f32"
+				},
+				{
+					"name": "speed_climb",
+					"type": "f32"
+				},
+				{
+					"name": "speed_jump",
+					"type": "f32"
+				},
+				{
+					"name": "liquid_fluidity",
+					"type": "f32"
+				},
+				{
+					"name": "liquid_fluidity_smooth",
+					"type": "f32"
+				},
+				{
+					"name": "liquid_sink",
+					"type": "f32"
+				},
+				{
+					"name": "gravity",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 70,
+			"name": "SpawnParticle",
+			"content": [
+				{
+					"name": "pos",
+					"type": "v3f"
+				},
+				{
+					"name": "velocity",
+					"type": "v3f"
+				},
+				{
+					"name": "acceleration",
+					"type": "v3f"
+				},
+				{
+					"name": "expiration_time",
+					"type": "f32"
+				},
+				{
+					"name": "size",
+					"type": "f32"
+				},
+				{
+					"name": "collision_detection",
+					"type": "b8"
+				},
+				{
+					"name": "texture",
+					"type": "blob"
+				},
+				{
+					"name": "vertical",
+					"type": "b8"
+				},
+				{
+					"name": "collision_removal",
+					"type": "b8"
+				},
+				{
+					"name": "animation",
+					"type": "TileAnimation"
+				},
+				{
+					"name": "glow",
+					"type": "u8"
+				},
+				{
+					"name": "object_collision",
+					"type": "b8"
+				},
+				{
+					"name": "node",
+					"type": "ParticleNode",
+					"required": "false"
+				}
+			]
+		},
+		{
+			"id": 71,
+			"name": "AddParticleSpawner",
+			"content": [
+				{
+					"name": "amount",
+					"type": "u16"
+				},
+				{
+					"name": "spawntime",
+					"type": "f32"
+				},
+				{
+					"name": "minpos",
+					"type": "v3f"
+				},
+				{
+					"name": "maxpos",
+					"type": "v3f"
+				},
+				{
+					"name": "minvel",
+					"type": "v3f"
+				},
+				{
+					"name": "maxvel",
+					"type": "v3f"
+				},
+				{
+					"name": "minacc",
+					"type": "v3f"
+				},
+				{
+					"name": "maxacc",
+					"type": "v3f"
+				},
+				{
+					"name": "minexptime",
+					"type": "f32"
+				},
+				{
+					"name": "maxexptime",
+					"type": "f32"
+				},
+				{
+					"name": "minsize",
+					"type": "f32"
+				},
+				{
+					"name": "maxsize",
+					"type": "f32"
+				},
+				{
+					"name": "collision_detection",
+					"type": "b8"
+				},
+				{
+					"name": "texture",
+					"type": "blob"
+				},
+				{
+					"name": "id",
+					"type": "u32"
+				},
+				{
+					"name": "vertical",
+					"type": "b8"
+				},
+				{
+					"name": "collision_removal",
+					"type": "b8"
+				},
+				{
+					"name": "attached_id",
+					"type": "u16"
+				},
+				{
+					"name": "animation",
+					"type": "TileAnimation"
+				},
+				{
+					"name": "glow",
+					"type": "u8"
+				},
+				{
+					"name": "object_collision",
+					"type": "b8"
+				},
+				{
+					"name": "node",
+					"type": "ParticleNode",
+					"required": "false"
+				}
+			]
+		},
+		{
+			"id": 73,
+			"name": "HudAdd",
+			"content": [
+				{
+					"name": "id",
+					"type": "u32"
+				},
+				{
+					"name": "type",
+					"type": "u8"
+				},
+				{
+					"name": "pos",
+					"type": "v2f"
+				},
+				{
+					"name": "name",
+					"type": "utf8string"
+				},
+				{
+					"name": "scale",
+					"type": "v2f"
+				},
+				{
+					"name": "text",
+					"type": "utf8string"
+				},
+				{
+					"name": "number",
+					"type": "u32"
+				},
+				{
+					"name": "item",
+					"type": "u32"
+				},
+				{
+					"name": "dir",
+					"type": "u32"
+				},
+				{
+					"name": "align",
+					"type": "v2f"
+				},
+				{
+					"name": "offset",
+					"type": "v2f"
+				},
+				{
+					"name": "world_pos",
+					"type": "v3f"
+				},
+				{
+					"name": "size",
+					"type": "v2s32"
+				},
+				{
+					"name": "z_index",
+					"type": "s16",
+					"default": 0
+				},
+				{
+					"name": "text2",
+					"type": "utf8string",
+					"default": ""
+				}
+			]
+		},
+		{
+			"id": 74,
+			"name": "HudRemove",
+			"content": [
+				{
+					"name": "id",
+					"type": "u32"
+				}
+			]
+		},
+		{
+			"id": 75,
+			"name": "HudChange",
+			"content": [
+				{
+					"name": "id",
+					"type": "u32"
+				},
+				{
+					"class": "variant",
+					"selector": "u8",
+					"options": [
+						{
+							"name": "pos",
+							"content": "v2f"
+						},
+						{
+							"name": "name",
+							"content": "utf8string"
+						},
+						{
+							"name": "scale",
+							"content": "v2f"
+						},
+						{
+							"name": "text",
+							"content": "utf8string"
+						},
+						{
+							"name": "number",
+							"content": "u32"
+						},
+						{
+							"name": "item",
+							"content": "u32"
+						},
+						{
+							"name": "dir",
+							"content": "u32"
+						},
+						{
+							"name": "align",
+							"content": "v2f"
+						},
+						{
+							"name": "offset",
+							"content": "v2f"
+						},
+						{
+							"name": "world_pos",
+							"content": "v3f"
+						},
+						{
+							"name": "size",
+							"content": "v2s32"
+						},
+						{
+							"name": "z_index",
+							"content": "u32"
+						},
+						{
+							"name": "text2",
+							"content": "utf8string"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": 76,
+			"name": "HudSetFlags",
+			"content": [
+				{
+					"name": "flags",
+					"type": "u32"
+				},
+				{
+					"name": "mask",
+					"type": "u32"
+				}
+			]
+		},
+		{
+			"id": 77,
+			"name": "HudSetParam",
+			"content": [
+				{
+					"name": "param",
+					"type": "u16"
+				},
+				{
+					"name": "value",
+					"type": "rawstring"
+				}
+			]
+		},
+		{
+			"id": 78,
+			"name": "Breath",
+			"content": [
+				{
+					"name": "breath",
+					"type": "u16"
+				}
+			]
+		},
+		{
+			"id": 79,
+			"name": "SetSky",
+			"min_version": 37,
+			"content": [
+				{
+					"name": "base_color",
+					"type": "color"
+				},
+				{
+					"name": "type",
+					"type": "rawstring"
+				},
+				{
+					"name": "textures",
+					"type": {
+						"class": "array",
+						"size": "u16",
+						"entry": "utf8string"
+					}
+				},
+				{
+					"name": "clouds",
+					"type": "b8"
+				}
+			]
+		},
+		{
+			"id": 79,
+			"name": "SetSky",
+			"min_version": 39,
+			"content": [
+				{
+					"name": "bgcolor",
+					"type": "color"
+				},
+				{
+					"name": "type",
+					"type": "utf8string"
+				},
+				{
+					"name": "clouds",
+					"type": "b8"
+				},
+				{
+					"name": "fog_sun_tint",
+					"type": "color"
+				},
+				{
+					"name": "fog_moon_tint",
+					"type": "color"
+				},
+				{
+					"name": "fog_tint_type",
+					"type": "utf8string"
+				},
+				{
+					"class": "variant",
+					"selector": "type",
+					"unknown": "ignore",
+					"options": {
+						"regular": [
+							{
+								"name": "day_sky",
+								"type": "color"
+							},
+							{
+								"name": "day_horizon",
+								"type": "color"
+							},
+							{
+								"name": "dawn_sky",
+								"type": "color"
+							},
+							{
+								"name": "dawn_horizon",
+								"type": "color"
+							},
+							{
+								"name": "night_sky",
+								"type": "color"
+							},
+							{
+								"name": "night_horizon",
+								"type": "color"
+							},
+							{
+								"name": "indoors",
+								"type": "color"
+							}
+						],
+						"skybox": [
+							{
+								"name": "textures",
+								"type": {
+									"class": "array",
+									"size": "u16",
+									"entry": "utf8string"
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": 80,
+			"name": "OverrideDayNightRatio",
+			"content": [
+				{
+					"name": "do_override",
+					"type": "b8"
+				},
+				{
+					"name": "day_night_ratio",
+					"type": "u16"
+				}
+			]
+		},
+		{
+			"id": 81,
+			"name": "LocalPlayerAnimations",
+			"content": [
+				{
+					"name": "stand",
+					"type": "v2s32"
+				},
+				{
+					"name": "walk",
+					"type": "v2s32"
+				},
+				{
+					"name": "dig",
+					"type": "v2s32"
+				},
+				{
+					"name": "walk_dig",
+					"type": "v2s32"
+				},
+				{
+					"name": "frame_speed",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 82,
+			"name": "EyeOffset",
+			"content": [
+				{
+					"name": "first",
+					"type": "v3f"
+				},
+				{
+					"name": "third",
+					"type": "v3f"
+				}
+			]
+		},
+		{
+			"id": 83,
+			"name": "DeleteParticleSpawner",
+			"content": [
+				{
+					"name": "id",
+					"type": "u32"
+				}
+			]
+		},
+		{
+			"id": 84,
+			"name": "CloudParams",
+			"content": [
+				{
+					"name": "density",
+					"type": "f32"
+				},
+				{
+					"name": "color_diffuse",
+					"type": "color"
+				},
+				{
+					"name": "color_ambient",
+					"type": "color"
+				},
+				{
+					"name": "height",
+					"type": "f32"
+				},
+				{
+					"name": "thickness",
+					"type": "f32"
+				},
+				{
+					"name": "speed",
+					"type": "v2f"
+				}
+			]
+		},
+		{
+			"id": 85,
+			"name": "FadeSound",
+			"content": [
+				{
+					"name": "sound_id",
+					"type": "s32"
+				},
+				{
+					"name": "step",
+					"type": "f32"
+				},
+				{
+					"name": "gain",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 86,
+			"name": "UpdatePlayerList",
+			"content": [
+				{
+					"name": "action",
+					"type": {
+						"class": "enum",
+						"type": "u8",
+						"labels": [
+							"init",
+							"add",
+							"remove"
+						]
+					}
+				},
+				{
+					"name": "player_names",
+					"type": {
+						"class": "array",
+						"size": "u16",
+						"entry": "utf8string"
+					}
+				}
+			]
+		},
+		{
+			"id": 87,
+			"name": "ModChannelMsg",
+			"content": [
+				{
+					"name": "channel_name",
+					"type": "utf8string"
+				},
+				{
+					"name": "sender",
+					"type": "utf8string"
+				},
+				{
+					"name": "message",
+					"type": "utf8string"
+				}
+			]
+		},
+		{
+			"id": 88,
+			"name": "ModChannelSignal",
+			"content": [
+				{
+					"name": "signal",
+					"type": {
+						"class": "enum",
+						"type": "u8",
+						"labels": [
+							"join_ok",
+							"join_failure",
+							"leave_ok",
+							"leave_failure",
+							"channel_not_registered",
+							"set_state"
+						]
+					}
+				},
+				{
+					"name": "channel_name",
+					"type": "utf8string"
+				},
+				{
+					"class": "variant",
+					"selector": "signal",
+					"unknown": "ignore",
+					"options": {
+						"set_state": [
+							{
+								"name": "state",
+								"type": "ModChannelState"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": 89,
+			"name": "NodeMetaChanged",
+			"content": [
+				{
+					"name": "changes",
+					"type": "blob",
+					"description": "ZLib-compressed change list"
+				}
+			]
+		},
+		{
+			"id": 90,
+			"name": "SetSun",
+			"content": [
+				{
+					"name": "visible",
+					"type": "b8"
+				},
+				{
+					"name": "texture",
+					"type": "utf8string"
+				},
+				{
+					"name": "tonemap",
+					"type": "utf8string"
+				},
+				{
+					"name": "sunrise",
+					"type": "utf8string"
+				},
+				{
+					"name": "sunrise_visible",
+					"type": "b8"
+				},
+				{
+					"name": "scale",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 91,
+			"name": "SetMoon",
+			"content": [
+				{
+					"name": "visible",
+					"type": "b8"
+				},
+				{
+					"name": "texture",
+					"type": "utf8string"
+				},
+				{
+					"name": "tonemap",
+					"type": "utf8string"
+				},
+				{
+					"name": "scale",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 92,
+			"name": "SetStars",
+			"content": [
+				{
+					"name": "visible",
+					"type": "b8"
+				},
+				{
+					"name": "count",
+					"type": "u32"
+				},
+				{
+					"name": "star_color",
+					"type": "color"
+				},
+				{
+					"name": "scale",
+					"type": "f32"
+				}
+			]
+		},
+		{
+			"id": 96,
+			"name": "SrpBytesSB",
+			"description": "Belonging to AuthMechanismSrp",
+			"content": [
+				{
+					"name": "bytes_s",
+					"type": "rawstring"
+				},
+				{
+					"name": "bytes_B",
+					"type": "rawstring"
+				}
+			]
+		},
+		{
+			"id": 97,
+			"name": "FormspecPrepend",
+			"content": [
+				{
+					"name": "formspec",
+					"type": "utf8string"
+				}
+			]
+		}
+	],
+	"enums": [
+		{
+			"name": "ModChannelState",
+			"type": "u8",
+			"labels": [
+				"init",
+				"read_write",
+				"read_only"
+			]
+		}
+	],
+	"records": [
+		{
+			"name": "MapNode",
+			"description": "MapNode serialization version 24 and above",
+			"content": [
+				{
+					"name": "content",
+					"type": "u16"
+				},
+				{
+					"name": "param1",
+					"type": "u8"
+				},
+				{
+					"name": "param2",
+					"type": "u8"
+				}
+			]
+		},
+		{
+			"name": "TileAnimation",
+			"content": [
+				{
+					"class": "variant",
+					"selector": "u8",
+					"options": [
+						{
+							"name": "none"
+						},
+						{
+							"name": "vertical_frames",
+							"content": [
+								{
+									"name": "aspect_w",
+									"type": "u16"
+								},
+								{
+									"name": "aspect_h",
+									"type": "u16"
+								},
+								{
+									"name": "length",
+									"type": "f32"
+								}
+							]
+						},
+						{
+							"name": "sheet_2d",
+							"content": [
+								{
+									"name": "frames_w",
+									"type": "u8"
+								},
+								{
+									"name": "frames_h",
+									"type": "u8"
+								},
+								{
+									"name": "frame_length",
+									"type": "f32"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ParticleNode",
+			"content": [
+				{
+					"name": "content",
+					"type": "u16"
+				},
+				{
+					"name": "param2",
+					"type": "u8"
+				},
+				{
+					"name": "tile",
+					"type": "u8"
+				}
+			]
+		}
+	]
+}
